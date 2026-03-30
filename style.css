@@ -1,0 +1,224 @@
+:root {
+  --font-family: 'Outfit', sans-serif;
+  --bg-color-1: #1a0b2e;
+  --bg-color-2: #4a154b;
+  --text-primary: #ffffff;
+  --text-secondary: #ffb703;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2));
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  pointer-events: none; /* Let clicks pass through to balloons initially */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#instructions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#instructions.hidden {
+  opacity: 0;
+  transform: translate(-50%, -60%);
+}
+
+/* Balloons */
+#balloon-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Container itself doesn't catch clicks */
+  z-index: 5;
+}
+
+.balloon {
+  position: absolute;
+  bottom: -150px;
+  width: 80px;
+  height: 100px;
+  background-color: #ff3366;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.2), inset 10px 10px 20px rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  pointer-events: auto; /* Balloons catch clicks */
+  transition: transform 0.1s ease;
+  animation: floatUp 8s linear forwards, sway 3s ease-in-out infinite alternate;
+}
+
+.balloon:active {
+  transform: scale(0.9);
+}
+
+.balloon.popped {
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+/* The balloon string tie */
+.balloon::before {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 15px solid inherit; /* Will inherit color from style via JS/CSS var */
+  /* Fallback color below, but JS will set border-bottom-color for each one to match */
+  border-bottom-color: var(--balloon-color); 
+}
+
+/* The string */
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes floatUp {
+  0% {
+    bottom: -150px;
+  }
+  100% {
+    bottom: 120vh;
+  }
+}
+
+@keyframes sway {
+  0% {
+    margin-left: -20px;
+  }
+  100% {
+    margin-left: 20px;
+  }
+}
+
+/* Reveal Screen */
+#reveal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  opacity: 1;
+  transition: opacity 1s ease;
+  background: radial-gradient(circle, rgba(26,11,46,0.5) 0%, rgba(0,0,0,0.8) 100%);
+}
+
+#reveal-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reveal-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.reveal-content h2.name-highlight {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(255, 183, 3, 0.6);
+  animation: pulse 2s infinite;
+}
+
+.reveal-content p.message {
+  font-size: 1.5rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 0 20px rgba(255, 183, 3, 0.6);
+  }
+  50% {
+    transform: scale(1.05);
+    text-shadow: 0 0 30px rgba(255, 183, 3, 0.9);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 20px rgba(255, 183, 3, 0.6);
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .reveal-content h1 {
+    font-size: 2rem;
+  }
+  .reveal-content h2.name-highlight {
+    font-size: 3rem;
+  }
+  .reveal-content p.message {
+    font-size: 1.2rem;
+  }
+  .balloon {
+    width: 60px;
+    height: 75px;
+  }
+}

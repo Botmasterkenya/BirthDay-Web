@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Aleko!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <!-- Instructions (fades out after a while or on first pop) -->
+  <div id="instructions" class="glass-panel">
+    <h1>Pop the balloons!</h1>
+    <p>Click them all to reveal a surprise...</p>
+  </div>
+
+  <!-- The balloons go here -->
+  <div id="balloon-container"></div>
+
+  <!-- The grand reveal -->
+  <div id="reveal-container" class="hidden">
+    <div class="reveal-content glass-panel">
+      <h1>Mbwa ww saka shughuli bro</h1>
+      <h2 class="name-highlight">Aleko!</h2>
+      <p class="message">Wishing you an amazing day filled with joy, laughter, and lots of cake! 🎂🎉</p>
+    </div>
+  </div>
+
+  <!-- Sound effects (Optional, maybe just visual is fine) -->
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>
